@@ -1,0 +1,126 @@
+{
+  "metrics_path": "C:\\Users\\93529\\Documents\\Codex\\2026-09-07\\https-www-kaggle-com-code-thomastschinkel\\work\\rac_map\\results\\full_v1\\full_rolling_metrics.csv",
+  "reference": "equal_weight",
+  "metric": "sharpe",
+  "pairs": {
+    "buy_hold": {
+      "difference": -0.012782941011277416,
+      "ci_low": -0.035575204588646187,
+      "ci_high": 0.004677003825854287,
+      "p_two_sided": 0.1916,
+      "wilcoxon_p": 0.3828125,
+      "wilcoxon_holm_p": 1.0
+    },
+    "elastic_net": {
+      "difference": -0.22387184878566896,
+      "ci_low": -0.37544957998055273,
+      "ci_high": -0.06717890229104315,
+      "p_two_sided": 0.0052,
+      "wilcoxon_p": 0.078125,
+      "wilcoxon_holm_p": 0.78125
+    },
+    "garch_momentum": {
+      "difference": -0.30054912405789524,
+      "ci_low": -0.7620717335222582,
+      "ci_high": 0.12186119065988857,
+      "p_two_sided": 0.2012,
+      "wilcoxon_p": 0.7421875,
+      "wilcoxon_holm_p": 1.0
+    },
+    "gbr": {
+      "difference": 0.01923128953568523,
+      "ci_low": -0.0548431334143247,
+      "ci_high": 0.07719862910165687,
+      "p_two_sided": 0.5976,
+      "wilcoxon_p": 0.4609375,
+      "wilcoxon_holm_p": 1.0
+    },
+    "joint_rac_map": {
+      "difference": -0.0012841833243839584,
+      "ci_low": -0.007027350527427201,
+      "ci_high": 0.0036559450496671253,
+      "p_two_sided": 0.6704,
+      "wilcoxon_p": 0.546875,
+      "wilcoxon_holm_p": 1.0
+    },
+    "lasso": {
+      "difference": -0.09542889858693529,
+      "ci_low": -0.21048637948920645,
+      "ci_high": -0.001445529840899129,
+      "p_two_sided": 0.0376,
+      "wilcoxon_p": 0.1953125,
+      "wilcoxon_holm_p": 1.0
+    },
+    "masa_compatible": {
+      "difference": -0.02270868303631675,
+      "ci_low": -0.04003608794546254,
+      "ci_high": -0.007372470146128338,
+      "p_two_sided": 0.0004,
+      "wilcoxon_p": 0.078125,
+      "wilcoxon_holm_p": 0.78125
+    },
+    "ols": {
+      "difference": -0.3423240760291736,
+      "ci_low": -0.5104105868238134,
+      "ci_high": -0.1829505579376656,
+      "p_two_sided": 0.0,
+      "wilcoxon_p": 0.0234375,
+      "wilcoxon_holm_p": 0.3046875
+    },
+    "pls": {
+      "difference": -0.3798941179590476,
+      "ci_low": -0.51769948725586,
+      "ci_high": -0.26112890763049246,
+      "p_two_sided": 0.0,
+      "wilcoxon_p": 0.0078125,
+      "wilcoxon_holm_p": 0.109375
+    },
+    "rac_map": {
+      "difference": -0.010553520741037103,
+      "ci_low": -0.029625720395592803,
+      "ci_high": 0.010157135570158404,
+      "p_two_sided": 0.2916,
+      "wilcoxon_p": 0.3125,
+      "wilcoxon_holm_p": 1.0
+    },
+    "ridge": {
+      "difference": -0.32997866092337025,
+      "ci_low": -0.5017266609109485,
+      "ci_high": -0.16884211944548308,
+      "p_two_sided": 0.0,
+      "wilcoxon_p": 0.0234375,
+      "wilcoxon_holm_p": 0.3046875
+    },
+    "risk_parity": {
+      "difference": -0.02613478508341259,
+      "ci_low": -0.11143939738269512,
+      "ci_high": 0.043622492102351904,
+      "p_two_sided": 0.524,
+      "wilcoxon_p": 0.7421875,
+      "wilcoxon_holm_p": 1.0
+    },
+    "static_multi_agent": {
+      "difference": -0.013657345608264787,
+      "ci_low": -0.027297082755999055,
+      "ci_high": -0.0011407851770659093,
+      "p_two_sided": 0.032,
+      "wilcoxon_p": 0.1484375,
+      "wilcoxon_holm_p": 1.0
+    },
+    "svr": {
+      "difference": -0.6335129514696014,
+      "ci_low": -1.0039666212793672,
+      "ci_high": -0.25848228428044595,
+      "p_two_sided": 0.0,
+      "wilcoxon_p": 0.0546875,
+      "wilcoxon_holm_p": 0.6015625
+    }
+  },
+  "friedman": {
+    "statistic": 42.60000000000002,
+    "pvalue": 9.924271237765541e-05
+  },
+  "unit": "test year after within-year seed averaging; paired circular block bootstrap with block length 2",
+  "n_test_years": 8,
+  "seed_treatment": "seeds quantify optimization uncertainty and are averaged within test year before market-level inference"
+}

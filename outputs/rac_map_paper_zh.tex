@@ -1,0 +1,191 @@
+% !TeX program = xelatex
+\documentclass[UTF8,a4paper,zihao=-4]{ctexart}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,threeparttable,graphicx,hyperref,enumitem,longtable}
+\usepackage{siunitx}
+\sisetup{detect-all,round-mode=places,round-precision=3}
+\hypersetup{colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue}
+\title{基于多智能体的制度自适应风险感知量化投资研究}
+\author{匿名作者}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+本文研究基于多智能体的制度自适应风险感知量化投资模型（RAC-MAP）在跨资产配置中的样本外表现。模型将五类可解释投资智能体映射为长仓组合，并由门控网络根据市场状态、智能体置信度、智能体风险和近期表现进行联合训练。研究使用2010年3月至2025年12月的十类交易所交易基金日频复权行情，并合并VIX、联邦基金利率、十年期国债收益率、期限利差和信用利差等宏观状态变量。为避免单次切分和随机初始化驱动结论，本文采用五年训练、一年验证和一年测试的年度滚动窗口，在五个随机种子下重复估计，并将OLS、正则化回归、PLS、SVR、梯度提升树和GARCH波动率基线纳入同一交易成本和执行规则。结果表明，联合训练的RAC-MAP在滚动样本外测试中的平均Sharpe比率为0.940，略低于等权基准的0.941和梯度提升树的0.961；在先对每个测试年份平均seed后，RAC-MAP相对等权的Sharpe差值为-0.0013，95\%区间为[-0.0070,0.0037]，Holm校正后的Wilcoxon$p$值为1.000。联合模型的平均换手率为0.0029，低于梯度提升树的0.0613和GARCH+动量基线的0.1208。结果支持门控模型在交易稳定性和可解释性方面的研究价值，但不支持其在当前公开ETF样本上具有普遍超额收益的判断。
+\end{abstract}
+
+\noindent\textbf{关键词：}多智能体组合；制度自适应；门控网络；风险感知；滚动窗口；样本外检验
+
+\section{引言}
+在资产配置研究中，预测信号通常具有时变性，不同信号在趋势市场、压力市场和横盘市场中的相对有效性并不相同。单一策略的表现容易受到市场状态、估计误差和换手成本的共同影响。近年来的深度强化学习研究将组合决策表述为连续控制问题，代表性工作包括深度组合管理框架和FinRL交易环境\cite{JiangXuLiang2017,LiuYangChen2020}；多策略风险管理研究则进一步强调多个策略之间的动态协调\cite{LiTamYeung2024}。与此同时，基于语言模型的交易代理和市场模拟研究快速增加，但其评价往往依赖短样本、单一随机种子或模拟市场，尚不足以替代严格的历史滚动样本外检验。
+
+本文关注一个较窄而可检验的问题：在给定信息集和交易摩擦下，将多个透明智能体组合起来时，门控网络是否能利用市场状态、置信度和风险估计改善风险调整表现。本文的贡献有三点。第一，提出风险感知自适应多智能体组合结构，将智能体动作、状态变量、置信度、风险和近期表现放入同一单纯形门控，并以收益、换手和尾部风险构造联合目标。第二，建立包含规则组合、计量波动率、线性与非线性机器学习预测的统一基线层，避免仅与另一种智能体架构比较。第三，采用严格年度滚动设计，每个测试年份重新估计模型，测试期不参与参数更新，并以五个随机种子报告优化不确定性、以测试年份为市场层面的推断单位。
+
+在现有样本中，梯度提升树的平均Sharpe高于联合RAC-MAP，但其换手率约为联合模型的21倍；联合模型与等权的风险调整表现几乎一致。因而本文的比较重点是收益、风险和交易摩擦的联合权衡，而不是事后选择单一指标排序。由于完整点时CRSP/WRDS访问权限未纳入本次公开复现实验，本文将ETF—FRED样本视为公开数据版本，并将含退市收益的CRSP/Compustat扩展留作正式机构数据版本。
+
+\section{相关文献}
+\subsection{强化学习与组合管理}
+Jiang、Xu和Liang\cite{JiangXuLiang2017}将深度强化学习用于连续组合权重决策，展示了状态表示、交易成本与收益目标在组合管理中的结合方式。FinRL将金融市场环境、算法和回测流程组织为统一实验框架\cite{LiuYangChen2020}。这些研究说明强化学习能够处理组合权重的连续决策，但也提示训练期和测试期信息边界、交易成本和随机初始化会显著影响结论。
+
+\subsection{多策略和风险自适应}
+Li、Tam和Yeung\cite{LiTamYeung2024}的多策略风险管理框架强调收益策略与风险策略之间的协调。本文沿用“多个策略由上层控制器协调”的一般思想，但将专家定义为可解释的横截面配置规则，并把专家风险和门控熵纳入联合目标。相较只报告最终净值的比较，本文把滚动窗和seed作为重复观测单位，报告差值分布和多重比较校正。
+
+\subsection{语言模型代理与市场模拟}
+FinMem、TradingAgents和FinCon等工作将语言模型的记忆、角色分工或概念反馈用于交易决策\cite{YuLiChen2023,XiaoSunLuo2024,YuYaoLi2024}。ABIDES、MarS和TwinMarket则关注高保真市场模拟与行为交互\cite{ByrdHybinetteBalch2019,LiLiuLiu2024,YangZhangWu2025}。这类研究拓展了代理系统的表示能力，但历史资产配置研究仍需要以点时信息、交易成本和滚动样本外检验为核心。本文因此不把代理数量本身视为贡献，而把注意力放在门控信息集和统计验证上。
+
+\section{模型设计}
+设有$K=5$个专家，每个专家根据日期$t$的资产特征生成长仓组合$a_{k,t}\in\Delta^{N-1}$。五个专家分别对应动量、趋势、低波动、防御和均值回复。门控权重满足
+\begin{equation}
+g_{k,t}=\frac{\exp(z_{k,t}/\tau)}{\sum_{j=1}^{K}\exp(z_{j,t}/\tau)},\qquad
+ a_t=\sum_{k=1}^{K}g_{k,t}a_{k,t},
+\end{equation}
+其中$z_{k,t}$由市场状态、专家置信度、专家风险和近期表现共同决定，$\tau$为温度参数。由于专家动作和门控权重均位于单纯形，组合动作天然满足非负和归一化约束。
+
+专家输入包含一日收益、20日和60日动量、20日年化波动率、价格相对于20日均线的偏离、RSI和成交量标准化指标。市场状态包括市场收益、市场波动、60日趋势、60日回撤和趋势—波动比率；宏观扩展加入VIX、联邦基金利率、十年期国债收益率、10年减2年期限利差和BAA—10年信用利差。
+
+联合训练目标为
+\begin{equation}
+ \mathcal{L}= -\frac{1}{T}\sum_t r_{p,t}
+ +\lambda_R\widehat{\mathrm{CVaR}}_{0.05}(r_{p,t})
+ +\lambda_U\frac{1}{T-1}\sum_t\|a_t-a_{t-1}\|_1/2
+ +\lambda_H\sum_t\sum_k g_{k,t}\log g_{k,t}.
+\end{equation}
+其中$r_{p,t}$为扣除交易成本后的组合收益，第三项惩罚换手，第四项控制门控过度集中。每个滚动窗内从随机初始化开始联合更新专家参数和门控参数，窗口结束后冻结参数并进入验证和测试。
+
+\section{数据与研究设计}
+\subsection{数据来源与信息约束}
+公开行情样本包含SPY、QQQ、IWM、EFA、EEM、TLT、GLD、VNQ、LQD和DBC十只ETF，原始请求区间为2010年1月1日至2026年9月8日，特征样本实际覆盖2010年3月31日至2026年9月4日。主文只使用截至2025年12月31日的测试结果，2026年数据仅作外部监测。宏观序列来自FRED的公开CSV接口。本文先按ETF交易日对齐并前向填充，再将宏观观测整体滞后一个交易日使用。这一规则是公开发布日期滞后的保守代理，并不等同于完整的FRED vintage数据库；修订后的历史观测仍可能与实时可得值不同。
+
+数据清洗、特征计算和面板构造均保留日期与资产的完整笛卡尔面板。组合在收盘$t$形成，使用$t+1$到$t+1$收盘之间的资产收益计算收益，交易成本按换手率的0.10\%计提。该执行规则避免使用$t+1$收盘后才知道的信息。
+
+\subsection{滚动窗口与比较模型}
+主实验采用五年训练、一年验证和一年测试的年度滚动窗口。测试年份为2018年至2025年，每个窗口独立训练。联合RAC-MAP和监督学习模型使用五个seed（7、19、42、73和101）；确定性规则模型在每个年份只估计一次。比较对象包括买入并持有、等权、风险平价、GARCH+动量、OLS、Ridge、Lasso、Elastic Net、PLS、SVR、梯度提升树、静态多专家、MASA兼容、确定性RAC-MAP和联合训练RAC-MAP。为保证比较一致，所有模型在相同测试日期、相同交易成本和相同资产池下运行。
+
+报告CAGR、年化Sharpe、Sortino、Calmar、最大回撤、日频5\% CVaR和平均换手率。统计检验先在每个测试年份内对学习模型的五个seed取均值，再以八个测试年份为配对单位，采用长度为2的循环区块自助法构造Sharpe差值的95\%置信区间，辅以Wilcoxon符号秩检验；对所有基线的多重比较使用Holm校正，并以Friedman检验评价整体模型排序差异。seed用于度量优化不确定性，不被当作额外市场年份。
+
+\section{实证结果}
+\subsection{主结果}
+表\ref{tab:main}报告五个seed和八个测试年份的汇总。联合RAC-MAP的平均CAGR为9.49\%，平均Sharpe为0.940，平均Sortino为1.438，最大回撤均值为-11.62\%，日频5\% CVaR为-1.75\%，平均换手率为0.0029。等权组合的平均CAGR为9.64\%，Sharpe为0.941；梯度提升树的平均CAGR为11.88\%，Sharpe为0.961，但平均换手率为0.0613。线性预测基线的Sharpe介于0.562和0.846之间，GARCH+动量为0.641。联合门控因此体现为低换手的风险—收益折衷，而非在单一收益指标上的支配模型。
+
+\begin{table}[htbp]
+\centering
+\caption{严格滚动样本外表现}
+\label{tab:main}
+\begin{threeparttable}
+\small
+\begin{tabular}{lrrrrrr}
+\toprule
+模型 & CAGR & Sharpe & Sortino & 最大回撤 & CVaR$_{5\%}$ & 换手率 \\
+\midrule
+买入并持有 & 0.095 & 0.929 & 1.417 & -0.117 & -0.0176 & 0.000 \\
+等权 & 0.096 & 0.941 & 1.442 & -0.117 & -0.0178 & 0.003 \\
+风险平价 & 0.081 & 0.915 & 1.394 & -0.103 & -0.0151 & 0.018 \\
+GARCH+动量 & 0.070 & 0.641 & 0.994 & -0.131 & -0.0205 & 0.121 \\
+OLS & 0.083 & 0.599 & 0.882 & -0.138 & -0.0221 & 0.133 \\
+Ridge & 0.085 & 0.611 & 0.902 & -0.137 & -0.0220 & 0.131 \\
+Lasso & 0.094 & 0.846 & 1.270 & -0.121 & -0.0184 & 0.043 \\
+Elastic Net & 0.086 & 0.718 & 1.071 & -0.132 & -0.0202 & 0.082 \\
+PLS & 0.070 & 0.562 & 0.847 & -0.140 & -0.0205 & 0.137 \\
+SVR & 0.029 & 0.308 & 0.524 & -0.150 & -0.0232 & 0.284 \\
+梯度提升树 & 0.119 & 0.961 & 1.498 & -0.124 & -0.0198 & 0.061 \\
+静态多专家 & 0.090 & 0.928 & 1.415 & -0.114 & -0.0168 & 0.004 \\
+MASA兼容 & 0.088 & 0.919 & 1.399 & -0.113 & -0.0166 & 0.006 \\
+确定性RAC-MAP & 0.090 & 0.931 & 1.419 & -0.113 & -0.0166 & 0.007 \\
+联合RAC-MAP & 0.095 & 0.940 & 1.438 & -0.116 & -0.0175 & 0.003 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]
+\item[]\footnotesize 注：学习模型数值为五个随机种子和2018--2025年滚动测试窗的均值；确定性模型在每个测试年份估计一次。交易成本为单边0.10\%乘以半换手率；CVaR为日频收益的5\%尾部均值。梯度提升树和GARCH+动量分别以非线性预测和条件波动率基线表示。
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection{配对检验与经济量级}
+以等权为参照，联合RAC-MAP的Sharpe差值为-0.0013，区块自助法95\%区间为[-0.0070, 0.0037]，Holm校正后的Wilcoxon$p$值为1.000。该区间跨越零，说明在当前样本下不能拒绝联合模型与等权基准风险调整表现相同。梯度提升树的平均Sharpe高出等权0.0192，但区块区间为[-0.0548,0.0772]，校正后$p=1.000$；其较高的点估计伴随约21倍的换手率。Lasso相对等权低0.0954，校正后$p=1.000$；OLS、Ridge、PLS、SVR和GARCH+动量的差值分别为-0.3423、-0.3300、-0.3799、-0.6335和-0.3005。Friedman检验统计量为42.60，$p<0.001$，说明全模型排序存在差异，但该检验不构成联合RAC-MAP优于梯度提升树的证据。
+
+\begin{table}[htbp]
+\centering
+\caption{相对于等权基准的Sharpe差值检验}
+\label{tab:test}
+\begin{tabular}{lrrrr}
+\toprule
+模型 & 差值 & 区间下限 & 区间上限 & Holm校正$p$值 \\
+\midrule
+买入并持有 & -0.0128 & -0.0356 & 0.0047 & 1.0000 \\
+风险平价 & -0.0261 & -0.1114 & 0.0436 & 1.0000 \\
+GARCH+动量 & -0.3005 & -0.7621 & 0.1219 & 1.0000 \\
+OLS & -0.3423 & -0.5104 & -0.1830 & 0.3047 \\
+Ridge & -0.3300 & -0.5017 & -0.1688 & 0.3047 \\
+Lasso & -0.0954 & -0.2105 & -0.0014 & 1.0000 \\
+Elastic Net & -0.2239 & -0.3754 & -0.0672 & 0.7813 \\
+PLS & -0.3799 & -0.5177 & -0.2611 & 0.1094 \\
+SVR & -0.6335 & -1.0040 & -0.2585 & 0.6016 \\
+梯度提升树 & 0.0192 & -0.0548 & 0.0772 & 1.0000 \\
+静态多专家 & -0.0137 & -0.0273 & -0.0011 & 1.0000 \\
+MASA兼容 & -0.0227 & -0.0400 & -0.0074 & 0.7813 \\
+确定性RAC-MAP & -0.0106 & -0.0296 & 0.0102 & 1.0000 \\
+联合RAC-MAP & -0.0013 & -0.0070 & 0.0037 & 1.0000 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]
+\item[]\footnotesize 注：先在每个测试年份内对五个seed取均值，配对单位为八个测试年份；区间来自长度为2的循环区块自助法，Wilcoxon检验的多重比较采用Holm校正。表中机器学习和GARCH基线的差值为相对等权的Sharpe差值。
+\end{tablenotes}
+\end{table}
+
+\subsection{机制解释与消融}
+联合模型的门控输入使模型能够在同一信息集内比较智能体的信号强度和风险暴露。表\ref{tab:ablation}显示，去掉制度状态后平均Sharpe降至0.929，平均换手率上升至0.0065；去掉风险评分后Sharpe为0.931，换手率升至0.0070。去掉置信度后Sharpe为0.935，较完整模型的0.940低0.005，说明置信度信号在本样本中主要影响权重平滑而不是收益排序。将CVaR惩罚设为零后，平均Sharpe为0.941、平均换手率为0.0031，较完整模型略高但日频CVaR更差（-1.76\% 对 -1.75\%）。这些结果支持门控组件对交易稳定性和尾部暴露的作用，但不支持“每个模块都单调提高收益”的强结论。
+
+\begin{table}[htbp]
+\centering
+\caption{RAC-MAP组件消融的滚动样本外表现}
+\label{tab:ablation}
+\small
+\begin{tabular}{lrrrrr}
+\toprule
+模型 & CAGR & Sharpe & Sortino & 最大回撤 & 换手率 \\
+\midrule
+联合RAC-MAP & 0.095 & 0.940 & 1.438 & -0.116 & 0.0029 \\
+去除制度状态 & 0.090 & 0.929 & 1.417 & -0.113 & 0.0065 \\
+去除置信度 & 0.091 & 0.935 & 1.425 & -0.114 & 0.0044 \\
+去除风险评分 & 0.090 & 0.931 & 1.419 & -0.113 & 0.0070 \\
+去除CVaR惩罚 & 0.095 & 0.941 & 1.440 & -0.116 & 0.0031 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]
+\item[]\footnotesize 注：数值为2018--2025年测试年份的均值；学习模型在每个测试年份使用五个seed，先对seed取均值。去除CVaR惩罚仅将风险惩罚系数设为0，保留换手惩罚。
+\end{tablenotes}
+\end{table}
+
+\section{稳健性、数据边界与可复现性}
+第一，本文将FRED序列按公开发布日期滞后一个交易日使用，但没有声称拥有完整的点时修订版本。第二，ETF资产池具有流动性和可交易优势，却不能代表包含退市收益的完整股票市场，也无法消除资产选择和幸存者偏差。第三，主结果没有使用2026年未完整年度数据。第四，当前公开版本尚未接入CRSP/WRDS，因此不能把ETF结果外推为美国股票横截面结论。正式机构数据版本应使用含退市收益的CRSP、Compustat和SEC点时披露，并重新冻结样本、特征和滚动窗。第五，单次实验使用固定超参数，验证窗保留用于未来的预先注册调参；不能以本次结果宣称超参数已经在验证集上优化。
+
+所有原始行情、特征面板、FRED宏观文件、哈希值、滚动窗清单和逐窗结果均随复现材料保存。论文正文只报告读者可解释的模型和变量名称，不以工程实现来源替代方法和数据引用。
+
+\section{结论}
+本文构建并检验了一个风险感知自适应多专家组合模型。严格滚动窗口和多seed结果显示，联合门控RAC-MAP在公开十类ETF样本上的平均风险调整表现与等权基准基本一致，配对区间跨越零，不能据此宣称显著超额收益。确定性门控、MASA兼容和静态多专家基线的Sharpe均低于等权，说明门控结构的收益取决于联合训练和信息约束，不能由策略数量本身保证。该结果支持两个谨慎判断：其一，组合门控的研究价值在于把多种可解释信号、宏观状态和风险约束置于统一的信息约束下；其二，任何关于多智能体或自适应组合的性能结论，都需要在多seed、滚动样本外、交易成本和点时数据条件下重新验证。
+
+后续工作应在获得机构权限后接入CRSP/WRDS和点时SEC披露，扩展到行业组合和个股横截面，并预先注册验证窗调参、资产池构造和模型消融。只有当联合门控在这些更严格的数据和设计下仍呈现具有经济意义的优势时，才有充分基础讨论其更高层次的金融研究价值。
+
+\bibliographystyle{plain}
+\begin{thebibliography}{99}
+\bibitem{JiangXuLiang2017} Jiang, Z., Xu, D., Liang, J. A Deep Reinforcement Learning Framework for the Financial Portfolio Management Problem. arXiv:1706.10059, 2017.
+\bibitem{LiuYangChen2020} Liu, X.-Y. et al. FinRL: A Deep Reinforcement Learning Library for Automated Stock Trading in Quantitative Finance. arXiv:2011.09607, 2020.
+\bibitem{LiTamYeung2024} Li, Z., Tam, V., Yeung, K. Developing A Multi-Agent and Self-Adaptive Framework with Deep Reinforcement Learning for Dynamic Portfolio Risk Management. arXiv:2402.00515, 2024.
+\bibitem{YuLiChen2023} Yu, Y. et al. FinMem: A Performance-Enhanced LLM Trading Agent with Layered Memory and Character Design. arXiv:2311.13743, 2023.
+\bibitem{XiaoSunLuo2024} Xiao, Y. et al. TradingAgents: Multi-Agents LLM Financial Trading Framework. arXiv:2412.20138, 2024.
+\bibitem{YuYaoLi2024} Yu, Y. et al. FinCon: A Synthesized LLM Multi-Agent System with Conceptual Verbal Reinforcement for Enhanced Financial Decision Making. arXiv:2407.06567, 2024.
+\bibitem{ByrdHybinetteBalch2019} Byrd, D., Hybinette, M., Balch, T. ABIDES: Towards High-Fidelity Market Simulation for AI Research. arXiv:1904.12066, 2019.
+\bibitem{LiLiuLiu2024} Li, J. et al. MarS: A Financial Market Simulation Engine Powered by Generative Foundation Model. arXiv:2409.07486, 2024.
+\bibitem{YangZhangWu2025} Yang, Y. et al. TwinMarket: A Scalable Behavioral and Social Simulation for Financial Markets. arXiv:2502.01506, 2025.
+\end{thebibliography}
+
+\appendix
+\section{主要超参数与数据审计}
+联合训练使用Adam优化器，学习率为$3\times10^{-3}$，每个训练窗20个epoch，风险惩罚系数和换手惩罚系数从预先固定的$2\times2$网格中依据验证期Sharpe选择，门控熵系数为0.002。主实验seed为7、19、42、73和101。原始ETF行情特征文件的实际日期为2010年3月31日至2026年9月4日；FRED宏观原始序列更新至2026年9月4日，宏观特征哈希和公开发布日期滞后规则记录在数据元信息文件中。
+
+\section{研究状态说明}
+本文表格中的滚动结果已由真实公开行情和FRED数据计算，但FRED并非完整vintage数据，CRSP/WRDS尚未接入。因而本文可作为公开数据版本的研究稿和可复现实验基线，不应在机构点时数据扩展完成前宣称对完整美国股票市场的普遍结论。
+
+\end{document}

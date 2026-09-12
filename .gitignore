@@ -1,0 +1,52 @@
+# Python and test caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Local environments and credentials
+.env
+.env.*
+!.env.example
+**/config_private.py
+**/*secret*
+**/*token*
+**/*credential*
+
+# LaTeX build intermediates (compiled PDF is retained)
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.nav
+*.out
+*.snm
+*.synctex.gz
+*.toc
+*.vrb
+*.xdv
+*.log
+
+# Temporary paper-review renders and previews
+work/pdf_ref/
+work/pdf_ref2/
+work/pdf_review/
+work/rac_map/paper_final_check/
+work/rac_map/paper_preview-*.png
+work/rac_map/paper_final_page*.png
+work/rac_map/paper_final_results-*.png
+
+# Reference examples containing embedded third-party credentials
+work/FinRL/finrl/applications/imitation_learning/Weight_Initialization.ipynb
+work/FinRL/finrl/applications/imitation_learning/Stock_Selection.ipynb
+work/FinRL/finrl/applications/imitation_learning/Imitation_Sandbox.ipynb
+work/FinRL/finrl/meta/preprocessor/shioajidownloader.py
+work/FinRL/finrl/meta/preprocessor/example_of_shioaji_api.py
+
+# Nested repository metadata (source files remain included)
+**/.git/

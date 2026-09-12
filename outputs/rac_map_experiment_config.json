@@ -1,0 +1,46 @@
+{
+  "data_path": "C:\\Users\\93529\\Documents\\Codex\\2026-09-07\\https-www-kaggle-com-code-thomastschinkel\\work\\rac_map\\data\\features_daily.parquet",
+  "model_dir": "C:\\Users\\93529\\Documents\\Codex\\2026-09-07\\https-www-kaggle-com-code-thomastschinkel\\work\\rac_map\\models",
+  "transaction_cost": 0.001,
+  "requested_train_timesteps": 5000,
+  "loaded_model_manifest": {
+    "data_path": "C:\\Users\\93529\\Documents\\Codex\\2026-09-07\\https-www-kaggle-com-code-thomastschinkel\\work\\rac_map\\data\\features_daily.parquet",
+    "train_start": "2010-03-31",
+    "train_end": "2021-12-31",
+    "timesteps_per_model": 5000,
+    "seed": 42,
+    "finrl_ppo": "work\\rac_map\\models\\finrl_ppo.zip",
+    "masa_profit_td3": "work\\rac_map\\models\\masa_profit_td3.zip",
+    "masa_risk_td3": "work\\rac_map\\models\\masa_risk_td3.zip",
+    "implementation_note": "FinRL-compatible PPO and MASA-inspired dual-TD3 reproduction in current SB3/Gymnasium; not byte-identical upstream execution."
+  },
+  "seed": 42,
+  "periods": {
+    "validation_2022_2023": [
+      "2022-01-01",
+      "2023-12-31"
+    ],
+    "test_2024_2025": [
+      "2024-01-01",
+      "2025-12-31"
+    ],
+    "external_2026_ytd": [
+      "2026-01-01",
+      "2026-09-04"
+    ]
+  },
+  "policy_names": [
+    "buy_hold",
+    "equal_weight",
+    "risk_parity",
+    "static_multi_agent",
+    "masa_compatible",
+    "finrl_ppo",
+    "masa_td3",
+    "rac_map",
+    "rac_map_no_regime",
+    "rac_map_no_confidence",
+    "rac_map_no_risk"
+  ],
+  "research_status": "smoke-test outputs; increase seeds/timesteps and freeze data before inference"
+}

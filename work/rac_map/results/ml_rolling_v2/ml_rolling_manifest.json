@@ -1,0 +1,24 @@
+{
+  "data_path": "C:\\Users\\93529\\Documents\\Codex\\2026-09-07\\https-www-kaggle-com-code-thomastschinkel\\work\\rac_map\\data\\features_macro.parquet",
+  "window_rule": "5 calendar years train, 1 validation, 1 test; annual refit",
+  "models": [
+    "ols",
+    "ridge",
+    "lasso",
+    "elastic_net",
+    "pls",
+    "svr",
+    "gbr"
+  ],
+  "seeds": [
+    7,
+    19,
+    42,
+    73,
+    101
+  ],
+  "transaction_cost": 0.001,
+  "feature_set": "ETF features plus market and lagged FRED macro state variables",
+  "model_selection": "pre-specified hyperparameter grids selected by validation Sharpe; test not used",
+  "research_status": "non-agent predictive baseline output; inspect and freeze before manuscript claims"
+}

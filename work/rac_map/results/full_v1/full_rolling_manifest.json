@@ -1,0 +1,42 @@
+{
+  "inputs": [
+    "C:\\Users\\93529\\Documents\\Codex\\2026-09-07\\https-www-kaggle-com-code-thomastschinkel\\work\\rac_map\\results\\rolling_v3\\rolling_metrics.csv",
+    "C:\\Users\\93529\\Documents\\Codex\\2026-09-07\\https-www-kaggle-com-code-thomastschinkel\\work\\rac_map\\results\\ml_rolling_v2\\ml_rolling_metrics.csv",
+    "C:\\Users\\93529\\Documents\\Codex\\2026-09-07\\https-www-kaggle-com-code-thomastschinkel\\work\\rac_map\\results\\garch_rolling\\garch_rolling_metrics.csv"
+  ],
+  "outputs": [
+    "full_rolling_metrics.csv",
+    "full_model_year_metrics.csv",
+    "full_rolling_summary.csv"
+  ],
+  "aggregation": "learned models averaged across seeds within test year; deterministic models stored once per year",
+  "test_years": [
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "models": [
+    "buy_hold",
+    "elastic_net",
+    "equal_weight",
+    "garch_momentum",
+    "gbr",
+    "joint_rac_map",
+    "lasso",
+    "masa_compatible",
+    "ols",
+    "pls",
+    "rac_map",
+    "ridge",
+    "risk_parity",
+    "static_multi_agent",
+    "svr"
+  ],
+  "transaction_cost": 0.001,
+  "research_status": "combined rolling output; freeze only after final statistical and manuscript audit"
+}

@@ -1,0 +1,43 @@
+{
+  "data_path": "C:\\Users\\93529\\Documents\\Codex\\2026-09-07\\https-www-kaggle-com-code-thomastschinkel\\work\\rac_map\\data\\features_macro.parquet",
+  "data_end_used": "2026-09-04",
+  "window_rule": "5 calendar years train, 1 calendar year validation, 1 calendar year test; annual refit",
+  "seeds": [
+    7,
+    19,
+    42,
+    73,
+    101
+  ],
+  "epochs": 20,
+  "transaction_cost": 0.001,
+  "models": [
+    "buy_hold",
+    "equal_weight",
+    "joint_rac_map",
+    "masa_compatible",
+    "rac_map",
+    "risk_parity",
+    "static_multi_agent"
+  ],
+  "validation_use": "selects risk_penalty and turnover_penalty from a pre-specified 2 x 2 grid by validation Sharpe; test data are not used",
+  "candidate_grid": [
+    {
+      "risk_penalty": 0.05,
+      "turnover_penalty": 0.01
+    },
+    {
+      "risk_penalty": 0.05,
+      "turnover_penalty": 0.03
+    },
+    {
+      "risk_penalty": 0.15,
+      "turnover_penalty": 0.01
+    },
+    {
+      "risk_penalty": 0.15,
+      "turnover_penalty": 0.03
+    }
+  ],
+  "research_status": "rolling multi-seed empirical output; inspect data provenance and freeze before manuscript claims"
+}

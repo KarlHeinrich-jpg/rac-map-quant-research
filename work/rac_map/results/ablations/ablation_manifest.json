@@ -1,0 +1,21 @@
+{
+  "data_path": "C:\\Users\\93529\\Documents\\Codex\\2026-09-07\\https-www-kaggle-com-code-thomastschinkel\\work\\rac_map\\data\\features_macro.parquet",
+  "seeds": [
+    7,
+    19,
+    42,
+    73,
+    101
+  ],
+  "epochs": 20,
+  "window_rule": "5 train, 1 validation, 1 test calendar years; annual refit",
+  "ablations": [
+    "ablation_no_regime",
+    "ablation_no_confidence",
+    "ablation_no_risk_score",
+    "joint_rac_map_no_cvar"
+  ],
+  "transaction_cost": 0.001,
+  "joint_no_cvar": "risk_penalty=0 while retaining turnover penalty",
+  "research_status": "ablation output; inspect before manuscript claims"
+}

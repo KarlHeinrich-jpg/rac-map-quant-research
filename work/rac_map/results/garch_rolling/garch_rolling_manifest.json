@@ -1,0 +1,8 @@
+{
+  "data_path": "C:\\Users\\93529\\Documents\\Codex\\2026-09-07\\https-www-kaggle-com-code-thomastschinkel\\work\\rac_map\\data\\features_macro.parquet",
+  "model": "GARCH(1,1) conditional volatility forecast plus lagged 60-day momentum tilt",
+  "window_rule": "5 calendar years train, 1 validation, 1 test; annual refit",
+  "transaction_cost": 0.001,
+  "implementation": "Gaussian quasi-maximum likelihood via scipy; no simulated data",
+  "research_status": "baseline output; inspect and freeze before manuscript claims"
+}

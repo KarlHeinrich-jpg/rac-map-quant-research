@@ -1,0 +1,60 @@
+{
+  "metrics_path": "C:\\Users\\93529\\Documents\\Codex\\2026-09-07\\https-www-kaggle-com-code-thomastschinkel\\work\\rac_map\\results\\rolling_v2\\rolling_metrics.csv",
+  "reference": "equal_weight",
+  "metric": "sharpe",
+  "pairs": {
+    "buy_hold": {
+      "difference": -0.012782941011277416,
+      "ci_low": -0.022027284152075197,
+      "ci_high": -0.004454973032085267,
+      "p_two_sided": 0.002,
+      "wilcoxon_p": 0.026294672197929577,
+      "wilcoxon_holm_p": 0.07888401659378873
+    },
+    "joint_rac_map": {
+      "difference": -0.0012841833243839806,
+      "ci_low": -0.003730772196081938,
+      "ci_high": 0.0010104108709017919,
+      "p_two_sided": 0.2808,
+      "wilcoxon_p": 0.2162961354260915,
+      "wilcoxon_holm_p": 0.432592270852183
+    },
+    "masa_compatible": {
+      "difference": -0.02270868303631675,
+      "ci_low": -0.030563294431115422,
+      "ci_high": -0.015418334657020477,
+      "p_two_sided": 0.0,
+      "wilcoxon_p": 4.0079221977960895e-05,
+      "wilcoxon_holm_p": 0.00024047533186776537
+    },
+    "rac_map": {
+      "difference": -0.010553520741037103,
+      "ci_low": -0.019029174939339318,
+      "ci_high": -0.0015946334768107632,
+      "p_two_sided": 0.0208,
+      "wilcoxon_p": 0.010513297602366438,
+      "wilcoxon_holm_p": 0.04205319040946575
+    },
+    "risk_parity": {
+      "difference": -0.026134785083412593,
+      "ci_low": -0.06010640555897164,
+      "ci_high": 0.00806103991920859,
+      "p_two_sided": 0.136,
+      "wilcoxon_p": 0.31253191263840885,
+      "wilcoxon_holm_p": 0.432592270852183
+    },
+    "static_multi_agent": {
+      "difference": -0.013657345608264787,
+      "ci_low": -0.020002489990595212,
+      "ci_high": -0.0075130682498652426,
+      "p_two_sided": 0.0,
+      "wilcoxon_p": 0.000595314674683097,
+      "wilcoxon_holm_p": 0.0029765733734154853
+    }
+  },
+  "friedman": {
+    "statistic": 37.467857142857156,
+    "pvalue": 1.4271482430973195e-06
+  },
+  "unit": "seed x test_year paired window; block bootstrap block length 2"
+}

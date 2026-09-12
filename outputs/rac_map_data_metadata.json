@@ -1,0 +1,28 @@
+{
+  "source": "Yahoo Finance chart API via yfinance",
+  "source_url": "https://finance.yahoo.com/",
+  "retrieved_at_utc": "2026-09-07T14:50:47.902519+00:00",
+  "requested_start": "2010-01-01",
+  "requested_end_exclusive": "2026-09-08",
+  "actual_start": "2010-03-31",
+  "actual_end": "2026-09-04",
+  "tickers": [
+    "SPY",
+    "QQQ",
+    "IWM",
+    "EFA",
+    "EEM",
+    "TLT",
+    "GLD",
+    "VNQ",
+    "LQD",
+    "DBC"
+  ],
+  "raw_rows": 41940,
+  "feature_rows": 41340,
+  "raw_sha256": "4eaa6c74d838dcb38bc055516f33937717fa458d9fbc0a6d550853e5805f542b",
+  "feature_sha256": "3339f927e55faac0dcc068d3874572f36db17c52132e8f6e437a3c9ab7cb513c",
+  "masa_compatibility_export": "ETF_10_1d.csv",
+  "finrl_compatibility_export": "finrl_processed.csv",
+  "note": "Public-data prototype. Yahoo data may be revised; pin these files for a paper replication package."
+}

@@ -1,0 +1,24 @@
+{
+  "data_path": "C:\\Users\\93529\\Documents\\Codex\\2026-09-07\\https-www-kaggle-com-code-thomastschinkel\\work\\rac_map\\data\\features_macro.parquet",
+  "data_end_used": "2026-09-04",
+  "window_rule": "5 calendar years train, 1 calendar year validation, 1 calendar year test; annual refit",
+  "seeds": [
+    7,
+    19,
+    42,
+    73,
+    101
+  ],
+  "epochs": 40,
+  "transaction_cost": 0.001,
+  "models": [
+    "buy_hold",
+    "equal_weight",
+    "joint_rac_map",
+    "masa_compatible",
+    "rac_map",
+    "risk_parity"
+  ],
+  "validation_use": "reserved; fixed hyperparameters selected ex ante in this run",
+  "research_status": "rolling multi-seed empirical output; inspect data provenance and freeze before manuscript claims"
+}

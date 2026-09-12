@@ -1,8 +1,17 @@
 # RAC-MAP 研究交接记录
 
-更新时间：2026-09-08（Asia/Shanghai）
+更新时间：2026-09-13（Asia/Shanghai）
 
 交接对象：Claude。以下内容是当前工作区的唯一交接摘要；所有结果均需以文件中的 manifest、CSV 和 JSON 为准。
+
+## GitHub 私有备份
+
+- 仓库：<https://github.com/KarlHeinrich-jpg/rac-map-quant-research>
+- 可见性：Private
+- 首次备份提交：`bea34d622640f623efa7710424e0260b6e38ff9d`
+- 首次上传时间：2026-09-13（Asia/Shanghai）
+- 首次备份包含 280 个文件，覆盖数据、模型、实验源码、结果 CSV/JSON、中文 LaTeX/PDF、文献综述和本交接文档。
+- 依据凭据安全要求，`.env`、token、私钥、`config_private.py` 以及含硬编码第三方 API key 的少数参考示例被排除；具体清单见仓库根目录 `REPOSITORY_MANIFEST.md`。
 
 ## 当前研究定位
 

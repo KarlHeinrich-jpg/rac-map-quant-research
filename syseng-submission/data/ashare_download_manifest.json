@@ -1,0 +1,13 @@
+{
+  "source": "Tencent quote API (kline/kline raw + fqkline/get hfq)",
+  "retrieved_at_utc": "2026-09-23T11:17:11.548898+00:00",
+  "requested": 60,
+  "downloaded_new": 57,
+  "still_failed": 3,
+  "failed_codes": [
+    "000003",
+    "000015",
+    "000047"
+  ],
+  "store": "data\\ashare_daily"
+}

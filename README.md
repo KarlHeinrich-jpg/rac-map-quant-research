@@ -10,6 +10,8 @@
 - `work/MASA/`、`work/FinRL/`：经授权保存的参考实现与复现材料；其中含第三方凭据的示例文件不纳入版本库。
 - `outputs/`：汇总 CSV/JSON、中文论文、文献综述 PDF/LaTeX、研究交接压缩包。
 - `work/HANDOFF.md`、`work/current_plan.md`：研究状态、证据边界和后续计划。
+- `syseng-submission/`：《系统工程》专刊投稿稿的完整交付目录（A 股 868 只证券样本，
+  含论文源文件与 PDF、图件、实验与二次分析结果、数据与代码；详见该目录 README）。
 
 ## 实验协议
 

@@ -1,0 +1,13 @@
+{
+  "identified": false,
+  "note": "有效月份 0 < 12：横截面过窄，互补性不可识别",
+  "gamma": null,
+  "theta_95": null,
+  "theta_mean": null,
+  "gamma_minus_theta": null,
+  "exceeds": false,
+  "p_value": null,
+  "n_months": 0,
+  "state_counts": {},
+  "ic_overall": []
+}

@@ -1,0 +1,9 @@
+{
+  "mean_ret_high_mean_cell": 0.036548635997339686,
+  "mean_ret_low_mean_cell": 0.0037216120185356747,
+  "mean_ret_high_vol_cell": 0.036548635997339686,
+  "mean_ret_low_vol_cell": 0.0037216120185356747,
+  "spread_high_low_mean": 0.032827023978804014,
+  "spread_high_low_vol": 0.032827023978804014,
+  "n_cells": 15
+}

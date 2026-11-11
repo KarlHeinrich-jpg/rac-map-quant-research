@@ -1,0 +1,92 @@
+{
+  "panel": {
+    "panel_path": "F:\\work-environment\\workspace\\rac-map-theory\\data\\panel_monthly.parquet",
+    "n_codes": 707,
+    "n_periods": 249,
+    "mean_universe": 352.60642570281124,
+    "drop_delisted": false,
+    "liquid_quantile": null
+  },
+  "n_windows": 4,
+  "E2_complementarity": {
+    "identified": true,
+    "note": "",
+    "gamma": 2.730918704362941e-06,
+    "theta_95": 1.062448529866215e-05,
+    "theta_mean": 5.014179574781901e-06,
+    "gamma_minus_theta": -7.89356659429921e-06,
+    "exceeds": false,
+    "p_value": 0.78,
+    "n_months": 248,
+    "state_counts": {
+      "0": 83,
+      "1": 83,
+      "2": 82
+    },
+    "ic_overall": [
+      0.00012346056515838796,
+      -0.0029929972229962324,
+      0.0001771392885475232,
+      -0.0022740180398223377,
+      0.0,
+      0.0
+    ],
+    "state_var": "mkt_ret_12m",
+    "n_states": 3,
+    "ic_by_state": {
+      "0": [
+        7.573281680453376e-05,
+        -0.004905353283043586,
+        0.0005552335110990899,
+        -0.005563677057835295,
+        0.0,
+        0.0
+      ],
+      "1": [
+        0.0016882601032707162,
+        -0.0033643890214252073,
+        0.0013340633172774046,
+        -0.003347017564872797,
+        0.0,
+        0.0
+      ],
+      "2": [
+        -0.0014121121000849435,
+        -0.0006813987808799503,
+        -0.0013765986975056493,
+        0.002141843656205268,
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "E3_oracle": {
+    "cagr": {
+      "equal_weight": 0.0586,
+      "oracle_gate": -0.0195,
+      "static_experts": -0.0148
+    },
+    "sharpe": {
+      "equal_weight": 0.5652,
+      "oracle_gate": 0.0902,
+      "static_experts": 0.0846
+    },
+    "avg_turnover": {
+      "equal_weight": 0.1251,
+      "oracle_gate": 0.2883,
+      "static_experts": 0.2882
+    }
+  },
+  "E4a_state_count": {
+    "sharpe": {
+      "2": 0.4025,
+      "3": 0.3367,
+      "4": 0.2927
+    },
+    "mean_active": {
+      "2": -0.0546,
+      "3": -0.0432,
+      "4": -0.072
+    }
+  }
+}

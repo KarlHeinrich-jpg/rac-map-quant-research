@@ -1,0 +1,24 @@
+{
+  "sample": "ashare",
+  "first_test": 2024,
+  "last_test": 2025,
+  "train_years": 5,
+  "cost_bps": 10.0,
+  "objective": "active",
+  "seeds": [
+    7,
+    19,
+    42,
+    73,
+    101
+  ],
+  "panel": {
+    "panel_path": "F:\\work-environment\\workspace\\rac-map-theory\\data\\panel_monthly.parquet",
+    "n_codes": 707,
+    "n_periods": 249,
+    "mean_universe": 352.60642570281124,
+    "drop_delisted": false,
+    "liquid_quantile": null
+  },
+  "n_windows": 2
+}

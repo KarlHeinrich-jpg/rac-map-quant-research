@@ -1,0 +1,517 @@
+{
+  "sharpe": {
+    "metric": "sharpe",
+    "benchmark": "equal_weight",
+    "n_years": 12,
+    "pairs": {
+      "expert_low_beta": {
+        "diff": -0.20706040748254192,
+        "ci_lo": -0.336568147054124,
+        "ci_hi": -0.10173684354364658,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.0009765625,
+        "n_years": 12,
+        "holm_p": 0.0087890625
+      },
+      "expert_low_turnover": {
+        "diff": -0.06728473696767219,
+        "ci_lo": -0.22412618339987048,
+        "ci_hi": 0.06172035658666682,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.67724609375,
+        "n_years": 12,
+        "holm_p": 1.0
+      },
+      "expert_low_vol": {
+        "diff": 0.24627541721818147,
+        "ci_lo": 0.12287002621480096,
+        "ci_hi": 0.37527816032913636,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.0068359375,
+        "n_years": 12,
+        "holm_p": 0.041015625
+      },
+      "expert_momentum": {
+        "diff": -0.18953200359758096,
+        "ci_lo": -0.4420166963025339,
+        "ci_hi": 0.020473888670905233,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.2333984375,
+        "n_years": 12,
+        "holm_p": 0.93359375
+      },
+      "expert_reversal": {
+        "diff": 0.02066305381398245,
+        "ci_lo": -0.10940050279558651,
+        "ci_hi": 0.15403347456842548,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.9697265625,
+        "n_years": 12,
+        "holm_p": 1.0
+      },
+      "gate_active": {
+        "diff": 0.11450312792548095,
+        "ci_lo": -0.005529311375577194,
+        "ci_hi": 0.22476145242511159,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.0771484375,
+        "n_years": 12,
+        "holm_p": 0.3857421875
+      },
+      "gbrt": {
+        "diff": 0.007981722606883228,
+        "ci_lo": 0.0054189222974762394,
+        "ci_hi": 0.010582910760443971,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.00048828125,
+        "n_years": 12,
+        "holm_p": 0.0048828125
+      },
+      "ridge": {
+        "diff": 0.004779384077985153,
+        "ci_lo": 0.003141975396070765,
+        "ci_hi": 0.006694518523105314,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.0009765625,
+        "n_years": 12,
+        "holm_p": 0.0087890625
+      },
+      "risk_parity": {
+        "diff": 0.21102515597238725,
+        "ci_lo": 0.12980178007898768,
+        "ci_hi": 0.2981030042235337,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.00244140625,
+        "n_years": 12,
+        "holm_p": 0.01708984375
+      },
+      "static_experts": {
+        "diff": -0.011674954609345886,
+        "ci_lo": -0.09709536315346262,
+        "ci_hi": 0.06389776052529365,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.85009765625,
+        "n_years": 12,
+        "holm_p": 1.0
+      }
+    },
+    "friedman": {
+      "stat": 39.10606060606062,
+      "p": 2.4325410180635858e-05,
+      "n_models": 11,
+      "n_years": 12
+    }
+  },
+  "cagr": {
+    "metric": "cagr",
+    "benchmark": "equal_weight",
+    "n_years": 12,
+    "pairs": {
+      "expert_low_beta": {
+        "diff": -0.02898862721008637,
+        "ci_lo": -0.04680495960637793,
+        "ci_hi": -0.010839270376015644,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.01220703125,
+        "n_years": 12,
+        "holm_p": 0.09765625
+      },
+      "expert_low_turnover": {
+        "diff": 0.007192798209646463,
+        "ci_lo": -0.02787095527442072,
+        "ci_hi": 0.03881840066404013,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.90966796875,
+        "n_years": 12,
+        "holm_p": 1.0
+      },
+      "expert_low_vol": {
+        "diff": 0.03393779788355857,
+        "ci_lo": -0.002912390777770927,
+        "ci_hi": 0.0686886447920699,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.17626953125,
+        "n_years": 12,
+        "holm_p": 0.88134765625
+      },
+      "expert_momentum": {
+        "diff": 0.019824257064358513,
+        "ci_lo": -0.030373148579270027,
+        "ci_hi": 0.06353303828990395,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.5693359375,
+        "n_years": 12,
+        "holm_p": 1.0
+      },
+      "expert_reversal": {
+        "diff": 0.014058837216229775,
+        "ci_lo": -0.031025404709986118,
+        "ci_hi": 0.06003222439507153,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.5693359375,
+        "n_years": 12,
+        "holm_p": 1.0
+      },
+      "gate_active": {
+        "diff": 0.04968539577560523,
+        "ci_lo": 0.018837174759103587,
+        "ci_hi": 0.07474258726839611,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.01220703125,
+        "n_years": 12,
+        "holm_p": 0.09765625
+      },
+      "gbrt": {
+        "diff": 0.0014482079597726459,
+        "ci_lo": 0.0008488796367500598,
+        "ci_hi": 0.0019935571125994115,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.0009765625,
+        "n_years": 12,
+        "holm_p": 0.009765625
+      },
+      "ridge": {
+        "diff": 0.00091088695514405,
+        "ci_lo": 0.0005771288800267064,
+        "ci_hi": 0.0012498356234160485,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.0009765625,
+        "n_years": 12,
+        "holm_p": 0.009765625
+      },
+      "risk_parity": {
+        "diff": 0.027042288505695792,
+        "ci_lo": 0.005831923448497323,
+        "ci_hi": 0.047390684162320965,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.06396484375,
+        "n_years": 12,
+        "holm_p": 0.3837890625
+      },
+      "static_experts": {
+        "diff": 0.010644181589894263,
+        "ci_lo": -0.006250816939962895,
+        "ci_hi": 0.024847309725311125,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.2333984375,
+        "n_years": 12,
+        "holm_p": 0.93359375
+      }
+    },
+    "friedman": {
+      "stat": 28.77272727272731,
+      "p": 0.001356067149258085,
+      "n_models": 11,
+      "n_years": 12
+    }
+  },
+  "cvar_5": {
+    "metric": "cvar_5",
+    "benchmark": "equal_weight",
+    "n_years": 12,
+    "pairs": {
+      "expert_low_beta": {
+        "diff": -0.007513805651422011,
+        "ci_lo": -0.012253094032440574,
+        "ci_hi": -0.002120679443098101,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.02685546875,
+        "n_years": 12,
+        "holm_p": 0.18798828125
+      },
+      "expert_low_turnover": {
+        "diff": -0.0019160172169535347,
+        "ci_lo": -0.010070956931163211,
+        "ci_hi": 0.008541827958845043,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.5185546875,
+        "n_years": 12,
+        "holm_p": 1.0
+      },
+      "expert_low_vol": {
+        "diff": 0.028051527030298635,
+        "ci_lo": 0.01870839980399573,
+        "ci_hi": 0.03708842121874356,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.00146484375,
+        "n_years": 12,
+        "holm_p": 0.0146484375
+      },
+      "expert_momentum": {
+        "diff": -0.0228272406400819,
+        "ci_lo": -0.03836661269660611,
+        "ci_hi": -0.006859685349242223,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.01611328125,
+        "n_years": 12,
+        "holm_p": 0.12890625
+      },
+      "expert_reversal": {
+        "diff": -0.020441146834781078,
+        "ci_lo": -0.05214212239884338,
+        "ci_hi": 0.0013599545763204304,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.20361328125,
+        "n_years": 12,
+        "holm_p": 0.814453125
+      },
+      "gate_active": {
+        "diff": 0.0046996104812483406,
+        "ci_lo": -0.008673507107900054,
+        "ci_hi": 0.018064452903749764,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.33935546875,
+        "n_years": 12,
+        "holm_p": 1.0
+      },
+      "gbrt": {
+        "diff": 0.00018623517155303004,
+        "ci_lo": 3.7322928181115524e-05,
+        "ci_hi": 0.00032066465144382745,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.05224609375,
+        "n_years": 12,
+        "holm_p": 0.3134765625
+      },
+      "ridge": {
+        "diff": 0.00017939536307254195,
+        "ci_lo": 4.760284931929042e-05,
+        "ci_hi": 0.0003070832158262219,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.06396484375,
+        "n_years": 12,
+        "holm_p": 0.31982421875
+      },
+      "risk_parity": {
+        "diff": 0.019428624109292716,
+        "ci_lo": 0.013142030817910813,
+        "ci_hi": 0.02566738428848455,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.00244140625,
+        "n_years": 12,
+        "holm_p": 0.02197265625
+      },
+      "static_experts": {
+        "diff": -0.0009713202228616751,
+        "ci_lo": -0.007236337900757961,
+        "ci_hi": 0.006085838595315972,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.6220703125,
+        "n_years": 12,
+        "holm_p": 1.0
+      }
+    },
+    "friedman": {
+      "stat": 49.83333333333337,
+      "p": 2.864198664768609e-07,
+      "n_models": 11,
+      "n_years": 12
+    }
+  },
+  "avg_turnover": {
+    "metric": "avg_turnover",
+    "benchmark": "equal_weight",
+    "n_years": 12,
+    "pairs": {
+      "expert_low_beta": {
+        "diff": 0.05457110394053317,
+        "ci_lo": 0.048220422539281695,
+        "ci_hi": 0.06086653501082739,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.00048828125,
+        "n_years": 12,
+        "holm_p": 0.0048828125
+      },
+      "expert_low_turnover": {
+        "diff": 0.16588491940309813,
+        "ci_lo": 0.15583983590927492,
+        "ci_hi": 0.17591005496444237,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.00048828125,
+        "n_years": 12,
+        "holm_p": 0.0048828125
+      },
+      "expert_low_vol": {
+        "diff": 0.12624887079612285,
+        "ci_lo": 0.10885629278604876,
+        "ci_hi": 0.14240643422572927,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.00048828125,
+        "n_years": 12,
+        "holm_p": 0.0048828125
+      },
+      "expert_momentum": {
+        "diff": 0.29564902211415717,
+        "ci_lo": 0.28625239029073296,
+        "ci_hi": 0.30255058857996603,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.00048828125,
+        "n_years": 12,
+        "holm_p": 0.0048828125
+      },
+      "expert_reversal": {
+        "diff": 0.4876471233588419,
+        "ci_lo": 0.4563599418214456,
+        "ci_hi": 0.5188367334518404,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.00048828125,
+        "n_years": 12,
+        "holm_p": 0.0048828125
+      },
+      "gate_active": {
+        "diff": 0.24108586198605464,
+        "ci_lo": 0.2228352452607754,
+        "ci_hi": 0.25893587081004615,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.00048828125,
+        "n_years": 12,
+        "holm_p": 0.0048828125
+      },
+      "gbrt": {
+        "diff": 0.000749265524130126,
+        "ci_lo": 0.00037764312301109246,
+        "ci_hi": 0.0011341323268463075,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.00048828125,
+        "n_years": 12,
+        "holm_p": 0.0048828125
+      },
+      "ridge": {
+        "diff": 4.40212809533815e-05,
+        "ci_lo": -0.00014292363284908148,
+        "ci_hi": 0.00022490275026815568,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.791015625,
+        "n_years": 12,
+        "holm_p": 0.791015625
+      },
+      "risk_parity": {
+        "diff": 0.08267388810558991,
+        "ci_lo": 0.07239426847819588,
+        "ci_hi": 0.09219283994158081,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.00048828125,
+        "n_years": 12,
+        "holm_p": 0.0048828125
+      },
+      "static_experts": {
+        "diff": 0.1584420668669977,
+        "ci_lo": 0.15313516072503489,
+        "ci_hi": 0.16405231506416823,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.00048828125,
+        "n_years": 12,
+        "holm_p": 0.0048828125
+      }
+    },
+    "friedman": {
+      "stat": 117.15151515151513,
+      "p": 1.91288572770001e-20,
+      "n_models": 11,
+      "n_years": 12
+    }
+  },
+  "mean_active": {
+    "metric": "mean_active",
+    "benchmark": "equal_weight",
+    "n_years": 12,
+    "pairs": {
+      "expert_low_beta": {
+        "diff": -0.025933527828153915,
+        "ci_lo": -0.04188139388980203,
+        "ci_hi": -0.009573345183757414,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.02685546875,
+        "n_years": 12,
+        "holm_p": 0.21484375
+      },
+      "expert_low_turnover": {
+        "diff": 0.004872711932795689,
+        "ci_lo": -0.024232795734352712,
+        "ci_hi": 0.031168982569239584,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.85009765625,
+        "n_years": 12,
+        "holm_p": 1.0
+      },
+      "expert_low_vol": {
+        "diff": 0.02247601839784921,
+        "ci_lo": -0.00935761317224442,
+        "ci_hi": 0.054556518605363924,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.2333984375,
+        "n_years": 12,
+        "holm_p": 1.0
+      },
+      "expert_momentum": {
+        "diff": 0.01665354187882049,
+        "ci_lo": -0.03372529143905714,
+        "ci_hi": 0.061662290329847574,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.5185546875,
+        "n_years": 12,
+        "holm_p": 1.0
+      },
+      "expert_reversal": {
+        "diff": 0.01323451822544025,
+        "ci_lo": -0.025315244195647638,
+        "ci_hi": 0.050961972736054,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.5185546875,
+        "n_years": 12,
+        "holm_p": 1.0
+      },
+      "gate_active": {
+        "diff": 0.03937601668054962,
+        "ci_lo": 0.009990167257139112,
+        "ci_hi": 0.06081593187587457,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.0341796875,
+        "n_years": 12,
+        "holm_p": 0.2392578125
+      },
+      "gbrt": {
+        "diff": 0.0012784366950743668,
+        "ci_lo": 0.0008073204356895416,
+        "ci_hi": 0.0017101858641236582,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.00048828125,
+        "n_years": 12,
+        "holm_p": 0.0048828125
+      },
+      "ridge": {
+        "diff": 0.0007837140122417501,
+        "ci_lo": 0.0005368468669673834,
+        "ci_hi": 0.0010197297540768995,
+        "crosses_zero": false,
+        "wilcoxon_p": 0.0009765625,
+        "n_years": 12,
+        "holm_p": 0.0087890625
+      },
+      "risk_parity": {
+        "diff": 0.01922017598850607,
+        "ci_lo": -0.0010127494230554367,
+        "ci_hi": 0.04135275986269546,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.26611328125,
+        "n_years": 12,
+        "holm_p": 1.0
+      },
+      "static_experts": {
+        "diff": 0.006956916899588425,
+        "ci_lo": -0.007694818603428626,
+        "ci_hi": 0.0192012362549947,
+        "crosses_zero": true,
+        "wilcoxon_p": 0.33935546875,
+        "n_years": 12,
+        "holm_p": 1.0
+      }
+    },
+    "friedman": {
+      "stat": 26.606060606060623,
+      "p": 0.0030051419427615214,
+      "n_models": 11,
+      "n_years": 12
+    }
+  }
+}

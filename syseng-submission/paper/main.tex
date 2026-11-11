@@ -1,0 +1,131 @@
+% !TEX program = xelatex
+% =====================================================================
+% 《系统工程》专刊「人工智能时代的金融风险管理与系统工程创新」投稿稿
+% 题目：信号—状态互补性与多智能体组合的边界条件
+%       ——影响因素、边际效应与中国 A 股证据
+%
+% 说明：本稿为双盲评审稿，正文与元数据均不含作者信息。
+% 编译：xelatex main.tex（连续两次）
+% =====================================================================
+\documentclass[UTF8,a4paper,zihao=-4]{ctexart}
+
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{threeparttable}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{caption}
+\usepackage{array}
+\usepackage{makecell}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\usepackage{setspace}
+
+\geometry{left=2.6cm,right=2.6cm,top=2.6cm,bottom=2.6cm}
+\onehalfspacing
+\captionsetup{font=small,labelfont=bf,labelsep=quad}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.15em}
+
+% ---- 定理环境（统一计数器）----
+\theoremstyle{plain}
+\newtheorem{theorem}{定理}
+\newtheorem{proposition}[theorem]{命题}
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{corollary}[theorem]{推论}
+\theoremstyle{definition}
+\newtheorem{assumption}[theorem]{假设}
+\newtheorem{definition}[theorem]{定义}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{注}
+
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Cov}{\mathrm{Cov}}
+\newcommand{\Corr}{\mathrm{Corr}}
+\newcommand{\Prob}{\mathrm{Pr}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\wtilde}{\tilde{w}}
+\newcommand{\bone}{\mathbf{1}}
+\newcommand{\bmu}{\boldsymbol{\mu}}
+\newcommand{\bSigma}{\boldsymbol{\Sigma}}
+\newcommand{\bpi}{\boldsymbol{\pi}}
+\newcommand{\Tr}{\mathrm{tr}}
+
+\graphicspath{{../figures/}}
+
+\title{\bfseries 基于多智能体的量化投资策略}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\noindent\textbf{摘\quad 要}：多智能体量化投资已成为人工智能在资产管理中的主流实现方式，
+其核心是依据市场状态动态合成多个信号（门控组合），但该架构相对静态信号合成的优势缺乏明确条件。本文建立信号—状态互补性框架，
+给出门控占优的闭式阈值不等式，并把门控价值解释为信息租金：
+只有信号有效性的制度差异（互补性）超过状态信息的获取成本与交易成本，门控才值得做。
+基于中国 A 股 868 只证券、247 个月度形成期的点时面板与 2014—2025 年 12 个滚动窗口，
+门控组合的年化主动收益为 3.77\%，相对等权的夏普差值为 0.115，
+Holm 校正后 $p=0.386$，经济量级明显而统计不显著。
+价值集中于高波动与外生冲击年份（冲击年 $+0.173$ 对对照年 $+0.073$），
+主要来自二阶风险配置渠道。单边成本每上升 10 个基点使夏普差值下降约 0.015，
+盈亏平衡成本约 92 个基点；制度状态数在 3 处呈内点最优。
+结论对制度定义与推断设定敏感。
+
+\vspace{0.4em}
+\noindent\textbf{关键词}：多智能体组合；信号—状态互补性；信息租金；制度切换；估计误差；交易成本；金融风险管理
+
+\vspace{0.3em}
+\noindent\textbf{中图分类号}：F830.59；F224.0
+
+\vspace{0.8em}
+{\raggedright\small
+\noindent\textbf{Multi-Agent Quantitative Investment Strategies}\par
+
+\vspace{0.3em}
+\noindent\textbf{Abstract}: Gated multi-agent portfolios have become a default architecture
+in research at the intersection of artificial intelligence and quantitative investment,
+yet their advantage over static combination lacks explicit conditions. This paper develops
+a signal--state complementarity framework, derives a closed-form threshold inequality for
+gating dominance, and interprets the value of gating as an information rent: gating pays
+only when the regime-dependence of signal effectiveness exceeds the cost of acquiring
+regime information and the cost of trading. Using a point-in-time monthly panel of 868
+Chinese A-share stocks over 247 formation months with 12 annual rolling windows from 2014
+to 2025, we
+find that the gated portfolio earns an annualized active return of 3.77\% and a Sharpe
+difference of 0.115 against equal weighting, which is economically sizable but
+statistically insignificant after Holm adjustment ($p=0.386$); its relative value
+concentrates in high-volatility years and in years of exogenous shocks (+0.173 versus
++0.073 in other years), and originates mainly from the second-order risk-allocation
+channel. A 10-basis-point increase in the one-way
+transaction cost lowers the Sharpe difference by about 0.015, with a break-even cost of
+roughly 92 basis points, and the number of regimes exhibits an interior optimum at
+three. The conclusions are sensitive to the regime definition and the bootstrap block
+length, and complementarity is not identifiable in a narrow cross-section. The
+threshold inequality turns the question of whether gating is worthwhile into a decision
+problem that can be independently recomputed.
+\vspace{0.3em}
+\noindent\textbf{Keywords}: multi-agent portfolio; signal--state complementarity;
+information rent; regime switching; estimation error; transaction cost;
+financial risk management\par
+}
+
+\setcounter{page}{1}
+
+\input{sec01_intro}
+\input{sec02_lit}
+\input{sec03_framework}
+\input{sec04_design}
+\input{sec05_factors}
+\input{sec06_marginal}
+\input{sec07_robust}
+\input{sec08_policy}
+\input{sec09_conclusion}
+\input{appendix}
+\input{refs}
+
+\end{document}

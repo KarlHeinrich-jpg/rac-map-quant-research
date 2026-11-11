@@ -1,0 +1,21 @@
+{
+  "created_at": "2026-09-23T12:31:19.470393+00:00",
+  "n_securities_in_store": 887,
+  "panel_rows": 173522,
+  "panel_codes": 868,
+  "months": 247,
+  "month_min": "2006-01-04",
+  "month_max": "2026-07-31",
+  "in_universe_rows": 108252,
+  "mean_universe_size": 438.26720647773277,
+  "n_delist_buffer": 8,
+  "execution_rule": "weights at month-end t close; executed at first trading day of t+1 close; return to first trading day of t+2 close",
+  "rules": {
+    "min_month_days": 5,
+    "liquidity_quantile": 0.3,
+    "st_pattern": "ST|\\*|退$|退市|摘牌",
+    "min_listed_months": 6,
+    "limit_rule": "ChiNext/STAR 20%, others 10%; first three trading days of execution month"
+  },
+  "output": "panel_monthly.parquet"
+}

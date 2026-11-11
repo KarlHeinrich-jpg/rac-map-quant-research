@@ -1,0 +1,98 @@
+\appendix
+
+\section{阈值定理的完整推导与 $\Theta$ 的显式形式}
+\label{app:proof}
+
+设主动权重由估计的条件信息系数构造。记 $\hat b\in\R^{K\times S}$ 为估计矩阵，
+$b$ 为真值矩阵，考虑主动组合 $\wtilde w(\hat b)=\frac1\lambda\Pi(\hat b)$，
+其中 $\Pi(\cdot)$ 为把头寸投影到 $\bone^\top\wtilde w=0$ 子空间的算子。
+投资者效用（扣除成本）为
+\begin{equation}
+U=\wtilde w^\top r-\frac{\lambda}{2}\wtilde w^\top\bSigma\wtilde w-\kappa\mathcal{C}.
+\end{equation}
+由 $\E[\wtilde w^\top r]=\frac1\lambda\E[\hat b^\top b]$ 与全方差分解
+$\E[\hat b^\top\hat b]=\bar b^\top\bar b+\Tr\Var(\hat b)$，有
+\begin{equation}
+\E[U]=\frac1\lambda\E[\hat b^\top b]-\frac{1}{2\lambda}\E[\hat b^\top\hat b]-\kappa\mathcal{C}
+=\frac1\lambda\bar b^\top\bar b
+-\frac{1}{2\lambda}\Big(\bar b^\top\bar b+\underbrace{\textstyle\sum_s\pi_s(b_s-\bar b)^2}_{=\Gamma}
++\underbrace{\Tr\Var(\hat b)}_{=\Theta}\Big)-\kappa\mathcal{C}.
+\end{equation}
+静态合成对应 $\Gamma=0$、$\Theta=0$（不使用制度信息），两式相减得
+$\frac{1}{2\lambda}(\Gamma-\Theta)-\kappa\mathcal{C}$；
+以样本量 $\hat\Gamma,\hat\Theta$ 替换总体量即得式 \eqref{eq:main-delta}，
+由 $\mathcal{C}(\hat g)\ge0$ 得阈值不等式。
+
+噪声底线的显式形式由假设 \ref{ass:estimation} 代入 $\Tr\Var(\hat b)$ 得到。
+制度 $s$ 内每格的估计误差方差为 $\sigma_b^2/n_s$，
+$S$ 个制度的离散度归并出 $(S-1)/S$ 的自由度，故
+\begin{equation}
+\Theta=\frac{S-1}{S}\cdot\frac{\sigma_b^2}{\bar n}\cdot\overline{\mathrm{VIF}},
+\qquad \bar n=\frac{T}{S},
+\qquad
+\overline{\mathrm{VIF}}=\frac1K\sum_{k=1}^K\frac{1}{1-\rho_k^2},
+\end{equation}
+其中 $\rho_k$ 为专家 $k$ 与其余专家的多重相关系数。
+方差膨胀因子刻画专家信号的相关性：专家间相关越高，
+「有效独立专家数」越低，同一互补性所对应的噪声底线越高。
+本文在实证中以区块自助法校准 $\Theta$，避免依赖对 $\sigma_b$ 与 $\rho_k$ 的参数假设。
+
+\subsection*{两条渠道的收敛速率}
+
+一阶渠道的噪声底线由条件均值 $\hat b^{(1)}_{k,s}$ 的抽样误差决定：
+每格的均方误差为 $\sigma^2/n_s$，归并出 $(S-1)/S$ 个自由度的离散度，
+得 $\Theta^{(1)}\asymp c_1(S-1)/T$。
+二阶渠道涉及条件方差与相关系数：条件均值的每格有效样本量为 $n_s=\pi_sT$
+（仅时间维度），而条件方差的每格有效样本量为 $Nn_s$（时间与横截面共同贡献），
+因为方差是同一制度下 $N$ 个资产的收益共同贡献的。
+由 $\Var(\hat\sigma^2)\approx2\sigma^4/(Nn_s)$ 与 delta 方法，
+二阶统计量的抽样误差按 $1/\sqrt{NT}$ 收敛，故 $\Theta^{(2)}\asymp c_2(S-1)/(NT)$。
+当 $N$ 较大时 $\Theta^{(2)}\ll\Theta^{(1)}$，二阶渠道远比一阶渠道容易被识别。
+
+\section{数据审计}
+\label{app:audit}
+
+\begin{table}[htbp]
+\centering
+\caption{数据与样本审计}
+\label{tab:audit}
+\begin{threeparttable}
+\small
+\begin{tabular}{ll}
+\toprule
+项目 & 数值 / 说明 \\
+\midrule
+价格数据来源 & 公开行情接口，逐只证券采集 \\
+复权口径 & 不复权（流动性/涨跌停）+ 后复权（总收益）双序列 \\
+样本区间 & 2006 年 1 月 -- 2026 年 7 月，247 个月度形成期 \\
+证券数量 & 868 只 \\
+月均股票池 & 438 只（2006 年 306 只 $\to$ 2025 年 523 只） \\
+股票池筛选 & 当月 $\ge5$ 交易日、非 ST、上市满 6 个月、成交额 $\ge$ 30\% 分位 \\
+执行规则 & $t$ 月末形成 $\to$ $t{+}1$ 月首日收盘建仓 $\to$ $t{+}2$ 月首日收盘换仓 \\
+交易成本 & 单边 10 个基点（边际效应与敏感性覆盖 0--50 基点） \\
+不可成交处理 & 执行月首三日涨停者不可买入，权重按比例再分配 \\
+退市处理 & 有执行价但无退出价者收益记 $-1$（8 个真实退市观测） \\
+右边界处理 & 最后两月（退出价落在未观测月份）整月剔除 \\
+持有期收益 & 后复权价之比，含分红送转 \\
+测试年份 & 2014--2025 年，共 12 个年度滚动窗口 \\
+训练/验证/测试 & 5 年 / 1 年 / 1 年，每窗独立重估 \\
+随机种子 & 7、19、42；报告时先在年内对种子取平均 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item 注：全部筛选与特征构造只使用形成日及之前的信息；
+制度变量在训练窗内做扩展窗标准化，不使用未来信息。
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
+
+\subsection*{实现与数值检验}
+
+门控网络的全部解析梯度（信息比率项、CVaR 项、换手项、熵项）经中心差分数值检验，
+六种参数组合下的最大相对误差均低于 $2\times10^{-6}$。
+该检验在实现过程中揭示了两类不导致程序报错但使训练结果无意义的错误：
+（i）熵项与换手项缺失 $1/T$、$1/(T-1)$ 的均值因子，导致梯度按 $T$ 倍系统性高估；
+（ii）标准差分母的数值稳定项 $\varepsilon=10^{-8}$ 在 $\sigma\approx0.05$ 的量级上
+产生约 $2\times10^{-7}$ 的相对扰动，经 $1/\sigma^3$ 放大为约 100 倍的梯度偏差。
+此外，全部模块通过语法与静态检查；回测引擎对漂移换手、
+不可成交再分配与退市缓冲分别设有单元测试。

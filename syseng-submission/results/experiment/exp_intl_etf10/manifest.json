@@ -1,0 +1,34 @@
+{
+  "sample": "etf10",
+  "tickers": [
+    "DBC",
+    "EEM",
+    "EFA",
+    "GLD",
+    "IWM",
+    "LQD",
+    "QQQ",
+    "SPY",
+    "TLT",
+    "VNQ"
+  ],
+  "n_assets": 10,
+  "n_periods": 404,
+  "first_test": 2014,
+  "last_test": 2025,
+  "cost_bps": 10.0,
+  "windows": [
+    2014,
+    2015,
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ]
+}

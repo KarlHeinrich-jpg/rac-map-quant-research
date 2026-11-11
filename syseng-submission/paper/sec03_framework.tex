@@ -1,0 +1,305 @@
+\section{分析框架}
+\label{sec:framework}
+
+设资产 $i=1,\dots,N$，专家（信号）$k=1,\dots,K$，市场制度 $s=1,\dots,S$，
+样本期数 $T$。制度过程 $\{s_t\}$ 为一阶马尔可夫链，转移矩阵 $P=(p_{sl})$，
+平稳分布 $\bpi=(\pi_1,\dots,\pi_S)$。资产条件期望收益与协方差记为
+$\bmu_s=\E[r_{t+1}\mid s_t=s]$、$\bSigma_s=\Var(r_{t+1}\mid s_t=s)$。
+组合空间为长仓满仓单纯形，基准取等权 $w^{ew}=\bone/N$，
+主动权重 $\wtilde w_t=w_t-w^{ew}$。
+
+\begin{lemma}[基准恒等式]
+\label{lem:identity}
+对任意长仓满仓组合 $w_t$，$r_{p,t+1}-r_{ew,t+1}=\wtilde w_t^\top r_{t+1}$。
+\end{lemma}
+
+证明由 $\bone^\top w_t=\bone^\top w^{ew}=1$ 直接得到，不依赖任何分布假设。
+该恒等式说明满仓长仓组合的相对表现完全由主动权重决定，与市场整体涨跌无关。
+它同时意味着，绝对收益目标中与决策无关的 $r_{ew}$ 项无法为权重选择提供信息，
+这是退化命题的起点。
+
+专家 $k$ 由特征向量 $x_{i,t}$ 产生截面打分 $\theta_{k,i,t}=\phi_k(x_{i,t})$，
+并通过带温度参数 $\tau_k>0$ 的 softmax 映射为组合权重
+\begin{equation}
+a_{k,i,t}=\frac{\exp(\theta_{k,i,t}/\tau_k)}{\sum_{j=1}^N\exp(\theta_{k,j,t}/\tau_k)} .
+\label{eq:softmax-expert}
+\end{equation}
+$\tau_k\to\infty$ 时专家趋向等权，$\tau_k\to0$ 时专家集中持有打分最高的少数资产。
+门控权重 $g_t\in\Delta^{K-1}$ 由状态、专家置信度、专家风险与近期表现决定，
+组合权重为 $w_t=\sum_k g_{k,t}a_{k,t}$。
+
+\begin{assumption}[制度切换因子结构]
+\label{ass:factor}
+资产条件期望收益可表示为 $\bmu_s=\sum_{k}b_{k,s}\tilde{\boldsymbol\theta}_{k}
++\varepsilon_s$，其中 $b_{k,s}$ 为专家 $k$ 在制度 $s$ 中的条件信息系数，
+$\tilde{\boldsymbol\theta}_k$ 为去均值后的打分向量，
+且 $\E[\varepsilon_s\mid\mathcal{F}_t]=0$、$\E[\tilde{\boldsymbol\theta}_k^\top\varepsilon_s]=0$。
+\end{assumption}
+
+假设 \ref{ass:factor} 把专家的预测能力按制度分解，并允许不同制度下的系数 $b_{k,s}$ 不同。
+这是「状态自适应」在数据中的对应物。
+
+\begin{definition}[信号—状态互补性]
+\begin{equation}
+\Gamma_k=\sum_{s=1}^S\pi_s\big(b_{k,s}-\bar b_k\big)^2,
+\qquad \bar b_k=\sum_{s=1}^S\pi_s b_{k,s};
+\qquad \Gamma=\frac1K\sum_{k=1}^K\Gamma_k .
+\label{eq:gamma-def}
+\end{equation}
+\end{definition}
+
+$\Gamma_k$ 度量专家 $k$ 的预测能力在不同制度之间的离散程度，
+与信号的总预测能力无关。整体很强但在各制度下同样强的信号，其 $\Gamma_k=0$；
+整体一般但在特定制度下极强的信号，其 $\Gamma_k>0$。
+门控的价值来自后者，而非前者。这与「信号越多越好」的直觉不同：
+合成多个信号本身不创造价值，信号的制度差异才创造价值。
+
+门控价值的经济学性质。先给出核心量的经济学定位，再进入形式化结果。
+\eqref{eq:gamma-def} 中的 $\Gamma$ 度量状态信息的价值：
+它回答「知道当前处于哪个状态，能让信号配置改善多少」。
+按状态切分样本需要付出估计代价，本文的 $\Theta$ 正是这一代价，
+它与状态数同向、与样本量反向。交易成本 $\kappa\mathcal{C}$ 是实施成本。
+三项相较决定门控是否值得做，这与信息经济学的基本逻辑一致：
+信息本身有价值，获取信息需要成本，两者相等处构成信息市场的边界\cite{grossman1980}。
+与既有套利研究相比，本文的成本结构不同：套利者面对的是资金约束与噪声交易者风险
+\cite{shleifer1997}，门控面对的是样本量、信号相关性与交易摩擦。
+
+这一读法给出三个可以逐条对照经验的结果。其一，门控收益随互补性上升、
+随估计噪声与交易成本下降，其分界即阈值不等式（定理 \ref{thm:threshold}）。
+其二，持续性提高信息的耐用性：制度半衰期越长，同一份状态信息在更多期内有效，
+乘数 $\mathcal{M}=(I-\beta P)^{-1}$ 可以理解为信息租金的现值倍数
+（定理 \ref{thm:persistence}）。其三，横截面宽度决定信息的价格：
+资产数不足时，单位样本无法支撑按状态切分的信息提取，
+互补性的上界低于噪声底线，机制不可识别（命题 \ref{prop:identification}）。
+第 \ref{sec:factors}--\ref{sec:robust} 节的检验围绕这三点展开。
+
+\begin{proposition}[门控价值的精确分解]
+\label{prop:decomp}
+在假设 \ref{ass:factor} 与式 \eqref{eq:softmax-expert} 下，
+门控相对静态合成的预期主动收益为
+\begin{equation}
+\E\big[r_p^{\text{gate}}-r_p^{\text{static}}\big]
+=\sum_{k=1}^K\sum_{s=1}^S\pi_s\big(\E[g_{k,s}]-\bar g_k\big)\,b_{k,s}\,c_{k,s},
+\qquad
+c_{k,s}=\Cov_N\big(\theta_{k,\cdot},\,a_{k,\cdot}\big)\big|_s>0 .
+\label{eq:prop1}
+\end{equation}
+\end{proposition}
+
+门控价值等于「门控对制度的响应」$ \times $「专家有效性的制度差异」$ \times $
+「专家的截面锐度」的三重加权和。若门控对制度无响应、或专家有效性无制度差异、
+或专家无观点（$c_{k,s}\to0$），门控价值为零。
+
+\begin{corollary}[识别条件]
+\label{cor:identification}
+若 $b_{k,s}=\bar b_k$ 对所有 $(k,s)$ 成立，则对任意可测门控有
+$\E[r_p^{\text{gate}}-r_p^{\text{static}}]=0$，且最优门控为常数门控。
+\end{corollary}
+
+推论 \ref{cor:identification} 说明门控的超额收益必来自互补性，
+不存在「门控本身创造价值」的机制。这句话对实践的含义是直接的：
+在投入自适应系统之前，先要回答的不是「用什么算法」，而是「自己的信号是否
+真的在不同市场状态下有效程度不同」。该推论同时为实证中的安慰剂检验提供依据：
+打乱制度标签、破坏 $b_{k,s}$ 的制度依赖性后，门控收益应当归零。
+
+实践中 $b_{k,s}$ 未知，需由样本估计。设制度 $s$ 内可用观测数为 $n_s=\pi_sT$。
+在月度面板中，$n_s$ 为制度 $s$ 出现的月份数，横截面维度不增加制度识别的时间信息。
+
+\begin{assumption}[估计误差]
+\label{ass:estimation}
+$\hat b_{k,s}-b_{k,s}\sim\mathcal{N}(0,\sigma_b^2/n_s)$，
+$\sigma_b^2=\sigma_\varepsilon^2/\Var_N(\theta_k)$，且不同 $(k,s)$ 单元的误差渐近独立。
+\end{assumption}
+
+记互补性统计量 $\hat\Gamma=\frac1K\sum_k\sum_s\hat\pi_s(\hat b_{k,s}-\hat{\bar b}_k)^2$，
+估计噪声底线
+\begin{equation}
+\Theta=\frac{S-1}{S}\cdot\frac{\sigma_b^2}{\bar n}\cdot\overline{\mathrm{VIF}},
+\qquad \bar n=\frac{T}{S},
+\qquad
+\overline{\mathrm{VIF}}=\frac1K\sum_{k=1}^K\frac{1}{1-\rho_k^2},
+\label{eq:theta-def}
+\end{equation}
+其中 $\rho_k$ 为专家 $k$ 与其余专家的多重相关系数。
+$\Theta$ 可以理解为状态信息的价格：制度划分越细（$S$ 越大）、
+样本越短（$T$ 越小）、信号之间越相关（有效独立专家数越少），
+同样一份状态信息就越贵。
+
+\begin{theorem}[门控占优的充要条件]
+\label{thm:threshold}
+设风险厌恶系数为 $\lambda$、单边交易成本为 $\kappa$、门控期望换手为 $\mathcal{C}(\hat g)$。
+在假设 \ref{ass:estimation} 下，门控相对最优静态合成的期望效用增量满足
+\begin{equation}
+\E\big[U_{\text{gate}}-U_{\text{static}}\big]
+=\frac{1}{2\lambda}\Big(\hat\Gamma-\Theta\Big)-\kappa\,\mathcal{C}(\hat g)
++o\!\left(\frac1T\right),
+\label{eq:main-delta}
+\end{equation}
+因此门控占优当且仅当
+$\hat\Gamma>\Theta+2\lambda\kappa\,\mathcal{C}(\hat g)$。
+\end{theorem}
+
+定理 \ref{thm:threshold} 的推导思路是：以估计的 $\hat b$ 构造主动组合后，
+期望效用中的信息项由全方差分解拆为「真实互补性 $\Gamma$」与「估计误差迹 $\Theta$」，
+静态合成对应 $\Gamma=\Theta=0$，两式相减得到式 \eqref{eq:main-delta}
+（完整推导见附录 \ref{app:proof}）。门控决策因此化为三个量的比较：
+可利用的互补性、不可利用的估计噪声与换手成本。交易成本以
+$2\lambda\kappa\mathcal{C}(\hat g)$ 的形式进入阈值，换手越高门槛越高。
+这三个量都可以在数据上独立估计，阈值判定因此是可执行的：
+先算状态信息的成本 $\Theta$ 与调仓成本，再判断互补性能否覆盖两者。
+
+\begin{remark}[四条比较静态]
+\label{rem:comparative}
+对阈值不等式求偏导可得四条可检验含义。其一，H1（制度数）：
+门控优势随制度数下降，因 $\Theta\propto(S-1)/T$。
+其二，H2（横截面宽度）：门控优势随横截面宽度上升，横截面越宽专家分歧越大。
+其三，H3（交易成本）：门控优势随成本上升而下降，成本线性进入阈值。
+其四，H4（样本长度）：门控优势随样本长度上升但边际递减。
+第 \ref{sec:marginal} 节对 H1、H3、H4 给出边际效应的定量估计。
+\end{remark}
+
+门控收益可能来自预测不同制度下的收益水平（一阶渠道），
+或适应不同制度下的风险结构（二阶渠道）。两者的识别难度差别很大。
+
+\begin{definition}[一阶与二阶互补性]
+$\Gamma^{(1)}=\frac1K\sum_k\sum_s\pi_s(b^{(1)}_{k,s}-\bar b^{(1)}_k)^2$，
+其中 $b^{(1)}_{k,s}=\E[\theta_k^\top r\mid s]$；
+$\Gamma^{(2)}=\frac1K\sum_k\sum_s\pi_s[(\sigma_{k,s}-\bar\sigma_k)^2
++\|\mathbf{R}_{k\cdot,s}-\bar{\mathbf{R}}_{k\cdot}\|^2]$，
+其中 $\sigma_{k,s}$ 为专家组合收益的条件标准差，
+$\mathbf{R}_{k\cdot,s}$ 为其与其余专家收益的条件相关系数向量。
+\end{definition}
+
+\begin{theorem}[两条渠道及其不同噪声底线]
+\label{thm:channels}
+门控的期望效用增量可分解为
+\begin{equation}
+\Delta U=\underbrace{\frac{1}{2\lambda}\Big(\Gamma^{(1)}-\Theta^{(1)}\Big)}_{\text{一阶：收益择时}}
++\underbrace{\frac{1}{2\lambda}\Big(\Gamma^{(2)}-\Theta^{(2)}\Big)}_{\text{二阶：风险配置}}
+-\kappa\,\mathcal{C}(\hat g),
+\label{eq:channel-decomp}
+\end{equation}
+且两条渠道的噪声底线以不同速率收敛：
+$\Theta^{(1)}\asymp c_1(S-1)/T$，$\Theta^{(2)}\asymp c_2(S-1)/(NT)$。
+在宽横截面上 $\Theta^{(2)}\ll\Theta^{(1)}$，二阶渠道远比一阶渠道容易被识别。
+\end{theorem}
+
+定理 \ref{thm:channels} 来自两条渠道的有效样本量差异：
+条件均值的每格有效样本量为 $n_s=\pi_sT$，仅来自时间维度；
+条件方差的每格有效样本量为 $Nn_s$，由时间与横截面共同贡献。
+二阶统计量的抽样误差因此按 $1/\sqrt{NT}$ 收敛。这一差异有直接的经济解释：
+预测「哪个信号在哪个状态下更赚钱」需要按状态估计收益水平，
+信息成本高而精度低；判断「风险结构变了没有」只需从价格序列估计波动与相关，
+信息成本低得多。该结果解释了「门控有正收益但过不了阈值」这一实证模式，
+也预示横截面宽度对识别能力的决定性作用。
+
+制度高度持续时，「当前处于哪个制度」包含关于未来若干期收益分布的信息，
+门控的价值相应放大。
+
+\begin{theorem}[持续性乘数]
+\label{thm:persistence}
+设制度服从转移矩阵 $P$、折现因子 $\beta<1$，则状态依赖的最优主动权重满足
+$\wtilde w^\star_s=\frac1\lambda[\sum_{n\ge0}\beta^nP^n]_{s\cdot}\bmu^{(n)}$，
+即静态解被乘上几何加权矩阵 $\mathcal{M}=(I-\beta P)^{-1}$。
+定义持续性乘数 $\mathcal{M}_s=[(I-\beta P)^{-1}]_{ss}$ 与半衰期
+$h_s=\ln0.5/\ln p_{ss}$，则 $\partial\mathcal{M}_s/\partial p_{ss}>0$，
+且 $\partial\Delta U/\partial\mathcal{M}_s>0$。
+\end{theorem}
+
+定理 \ref{thm:persistence} 给出可检验含义 H5：制度的半衰期越长，门控的潜在收益越大。
+第 \ref{sec:factors} 节通过估计转移矩阵与半衰期、检验持续性乘数与制度条件互补性的相关性、
+比较持续性加权与未加权互补性三方面验证该含义。
+
+比较静态 H1 指出制度数上升提高估计误差成本，而制度数上升同时提高可用互补性
+$\Gamma(S)$，因为更细的制度划分能分离出更多条件信息。两者的权衡使最优制度数可能内点。
+
+\begin{theorem}[最优制度数]
+\label{thm:optimal-S}
+在容量约束下（门控参数 $d_{\text{gate}}(S)$ 随 $S$ 上升，其估计误差造成
+$\frac{\sigma^2}{2\lambda}d_{\text{gate}}(S)/T$ 的效用损失，且 $\Gamma''(S)<0$），
+净价值函数
+\begin{equation}
+\Delta(S)=\frac{1}{2\lambda}\Big[\Gamma(S)-\Theta(S)\Big]
+-\frac{\sigma^2}{2\lambda}\cdot\frac{d_{\text{gate}}(S)}{T}
+-\kappa\,\mathcal{C}(S),
+\qquad \Theta(S)=c_1\frac{S-1}{T}
+\label{eq:delta-S}
+\end{equation}
+关于 $S$ 单峰，最优制度数 $\hat S^\ast$ 满足
+$\Gamma'(\hat S^\ast)=c_1/T+\sigma^2d_{\text{gate}}'(\hat S^\ast)/T+2\lambda\kappa\mathcal{C}'(\hat S^\ast)$。
+特别地，$\hat S^\ast$ 随样本长度 $T$ 上升，随交易成本 $\kappa$ 与门控参数量下降。
+\end{theorem}
+
+定理 \ref{thm:optimal-S} 的政策相关性在于：制度数不是越多越好，
+而是由样本长度、门控容量与交易成本共同决定的内点。
+第 \ref{sec:marginal} 节给出该边际效应的实证估计。
+
+\begin{proposition}[退化命题]
+\label{prop:degeneracy}
+设训练目标为
+$\mathcal{L}=-\frac1T\sum_t w_t^\top r_t+\lambda_R\mathrm{CVaR}
++\lambda_U\frac1{T-1}\sum_t\|w_t-w_{t-1}\|_1/2+\lambda_HH(g)$，
+组合恒满足长仓满仓。当
+\begin{equation}
+\frac{\bmu^\top\bSigma^{-1}\bmu}{\lambda}<\lambda_U
+\label{eq:degeneracy-cond}
+\end{equation}
+时，常数等权组合 $\wtilde w_t\equiv0$ 是该目标在二阶近似下的一阶最优解。
+\end{proposition}
+
+引理 \ref{lem:identity} 把绝对收益项拆为与决策无关的 $\bar r_{ew}$ 和主动项
+$\wtilde w_t^\top r_t$，前者不提供梯度。在 $\wtilde w_t\equiv0$ 处换手惩罚达到下界，
+次梯度含零，CVaR 项亦指向低方差方向。偏离等权带来一阶收益 $\bmu^\top\wtilde w$，
+同时承担 $\lambda_U\|\wtilde w\|_1$ 的一阶成本；式 \eqref{eq:degeneracy-cond} 成立时
+成本项占优。把第一项替换为主动收益即可消除退化：
+\begin{equation}
+\mathcal{L}_{\text{active}}=-\frac1T\sum_t\wtilde w_t^\top r_t
++\lambda_R\,\mathrm{CVaR}\big(\wtilde w^\top r\big)
++\lambda_U\cdot\text{turnover}+\lambda_H H(g)+\lambda_2\|W\|^2 .
+\label{eq:active-objective}
+\end{equation}
+修正后的目标不再被常数基准项主导，梯度信号完全来自横截面分歧。
+
+\begin{proposition}[窄横截面下的不可识别性]
+\label{prop:identification}
+互补性统计量的总体上界满足
+\begin{equation}
+\E\big[\hat\Gamma\big]\;\le\;\frac{1}{K}\sum_k\Var_N(\theta_k)\cdot
+\frac{\bar R^2}{1-\bar R^2}\cdot\frac{1}{N},
+\end{equation}
+其中 $\bar R^2$ 为打分对收益的截面解释力。当 $N$ 较小时该上界以 $1/N$ 收缩，
+而噪声底线 $\Theta\asymp(S-1)/T$ 不随 $N$ 变化。
+因此存在临界宽度 $N^\ast$，当 $N<N^\ast$ 时对任意 $T$ 都有 $\E[\hat\Gamma]<\Theta$，
+互补性在该横截面上不可识别。
+\end{proposition}
+
+命题 \ref{prop:identification} 的实证含义是：在少量资产的大类资产配置
+（如十只 ETF）上，「信号—状态互补性」没有可操作的经验对应物。
+第 \ref{sec:robust} 节用美国 ETF 样本给出直接证据。
+
+\begin{table}[htbp]
+\centering
+\caption{理论结果与可检验含义}
+\label{tab:theory-map}
+\begin{threeparttable}
+\small
+\begin{tabular}{p{3.0cm}p{6.6cm}p{4.4cm}}
+\toprule
+理论结果 & 核心内容 & 可检验含义 \\
+\midrule
+命题 \ref{prop:decomp} & 门控价值 = 互补性 $\times$ 门控响应 $\times$ 截面锐度 & 分解回归 \\
+推论 \ref{cor:identification} & 无互补性则门控收益恒为零 & 安慰剂检验 \\
+定理 \ref{thm:threshold} & 门控占优的充要条件 $\hat\Gamma>\Theta+2\lambda\kappa\mathcal{C}$ & 阈值检验 \\
+定理 \ref{thm:channels} & 一阶/二阶渠道，噪声底线 $O(1/T)$ 与 $O(1/(NT))$ & 渠道分别检验 \\
+定理 \ref{thm:persistence} & 持续性乘数 $\mathcal{M}=(I-\beta P)^{-1}$ & 半衰期与互补性正相关 \\
+定理 \ref{thm:optimal-S} & 净价值关于 $S$ 单峰 & 制度数内点最优 \\
+命题 \ref{prop:degeneracy} & 绝对收益目标导致退化 & 目标函数对照 \\
+命题 \ref{prop:identification} & 窄横截面上互补性不可识别 & 宽/窄样本对照 \\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}[flushleft]\footnotesize
+\item 注：表中 H0--H7 编号对应第 \ref{sec:factors}--\ref{sec:robust} 节的实证检验，
+详见表 \ref{tab:verdict}。
+\end{tablenotes}
+\end{threeparttable}
+\end{table}
